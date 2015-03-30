@@ -12,7 +12,12 @@ static const CGFloat canadaDollarExchangeRate = 1.26;
 static const CGFloat euroExchangeRate = 1.10;
 static const CGFloat yenExchangeRate = 119.24;
 
-@interface ViewController ()
+@interface ViewController () {
+    
+    CGFloat cadRate;
+    CGFloat euroRate;
+    CGFloat jpyRate;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *txtUsaDollar;
 @property (weak, nonatomic) IBOutlet UITextField *txtEuro;
@@ -36,7 +41,41 @@ static const CGFloat yenExchangeRate = 119.24;
 
     // Initialize the US Dollar to "1"
     _txtUsaDollar.text = @"1";
-    [self updateCurrencyTextFeilds:[_txtUsaDollar.text floatValue]];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{
+                    NSError *error = nil;
+                    NSString *urlString = [[NSString stringWithFormat:@"http://api.fixer.io/latest?base=USD"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    NSURL *url = [NSURL URLWithString:urlString];
+                    NSData* rateDataJSON = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+                    NSDictionary *rateDataDict = [NSJSONSerialization JSONObjectWithData:rateDataJSON options:kNilOptions error:&error];
+                    NSDictionary *rates = [rateDataDict objectForKey:@"rates"];
+    
+                       dispatch_async(dispatch_get_main_queue(),
+                                      ^{
+                                          if (error != nil) {
+                                              
+                                              NSLog(@"Server error = %@", error.description);
+                                              NSLog(@"Using default exchange rates");
+                                              
+                                              cadRate = canadaDollarExchangeRate;
+                                              euroRate = euroExchangeRate;
+                                              jpyRate = yenExchangeRate;
+                                          }
+                                          else {
+                                              
+                                              cadRate = [[rates objectForKey:@"CAD"] floatValue];
+                                              euroRate = [[rates objectForKey:@"EUR"] floatValue];
+                                              jpyRate = [[rates objectForKey:@"JPY"] floatValue];
+                                              
+                                              NSLog(@"CAD Rate = %f", cadRate);
+                                              NSLog(@"EUR Rate = %f", euroRate);
+                                              NSLog(@"JPY Rate = %f", jpyRate);
+                                              
+                                              [self updateCurrencyTextFeilds:[_txtUsaDollar.text floatValue]];
+                                          }
+                                      });//end block
+                   });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,9 +87,9 @@ static const CGFloat yenExchangeRate = 119.24;
 
 - (void) updateCurrencyTextFeilds:(CGFloat)dollar {
     
-    _txtCanadianDollar.text = [NSString stringWithFormat:@"%.4f", dollar / canadaDollarExchangeRate];
-    _txtEuro.text = [NSString stringWithFormat:@"%.4f", dollar / euroExchangeRate];
-    _txtJapaneseYen.text = [NSString stringWithFormat:@"%.4f", dollar / yenExchangeRate];
+    _txtCanadianDollar.text = [NSString stringWithFormat:@"%.4f", cadRate * dollar];
+    _txtEuro.text = [NSString stringWithFormat:@"%.4f", euroRate * dollar];
+    _txtJapaneseYen.text = [NSString stringWithFormat:@"%.4f", jpyRate * dollar];
 }
 
 #pragma mark - UITapGestureRecognizer handler
