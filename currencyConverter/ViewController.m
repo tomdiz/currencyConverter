@@ -24,6 +24,7 @@ static const CGFloat yenExchangeRate = 119.24;
 @property (weak, nonatomic) IBOutlet UITextField *txtCanadianDollar;
 @property (weak, nonatomic) IBOutlet UITextField *txtJapaneseYen;
 @property (weak, nonatomic) IBOutlet UIScrollView *vwScroll;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indNetworkLoading;
 
 @end
 
@@ -42,6 +43,8 @@ static const CGFloat yenExchangeRate = 119.24;
     // Initialize the US Dollar to "1"
     _txtUsaDollar.text = @"1";
 
+    [_indNetworkLoading startAnimating];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{
                     NSError *error = nil;
@@ -74,7 +77,9 @@ static const CGFloat yenExchangeRate = 119.24;
                                               
                                               [self updateCurrencyTextFeilds:[_txtUsaDollar.text floatValue]];
                                           }
-                                      });//end block
+
+                                          [_indNetworkLoading stopAnimating];
+                                     });//end block
                    });
 }
 

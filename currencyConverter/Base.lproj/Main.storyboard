@@ -115,6 +115,10 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="KjQ-LT-og5">
+                                        <rect key="frame" x="282" y="379" width="37" height="37"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="GZD-Ho-ft5" firstAttribute="leading" secondItem="Dzm-HC-Mf8" secondAttribute="leading" id="1IO-EV-Ol9"/>
@@ -133,6 +137,7 @@
                                     <constraint firstItem="saH-XA-HlU" firstAttribute="top" secondItem="t3n-Jz-KgU" secondAttribute="bottom" constant="8" symbolic="YES" id="aNo-zE-Ljs"/>
                                     <constraint firstItem="hjK-cp-ptp" firstAttribute="centerX" secondItem="rBO-m2-edN" secondAttribute="centerX" id="afg-fZ-3Sg"/>
                                     <constraint firstItem="SCU-ML-HxP" firstAttribute="leading" secondItem="SCB-4o-lOn" secondAttribute="leading" id="d2P-9U-CLg"/>
+                                    <constraint firstItem="KjQ-LT-og5" firstAttribute="centerX" secondItem="TSj-An-0gh" secondAttribute="centerX" id="ezv-sF-42c"/>
                                     <constraint firstItem="hjK-cp-ptp" firstAttribute="centerX" secondItem="bbh-I2-zzU" secondAttribute="centerX" id="gyH-xi-oTc"/>
                                     <constraint firstItem="Akg-pL-Zcw" firstAttribute="leading" secondItem="rBO-m2-edN" secondAttribute="leading" constant="46" id="hTh-2T-Da3"/>
                                     <constraint firstItem="SCB-4o-lOn" firstAttribute="top" secondItem="Dzm-HC-Mf8" secondAttribute="bottom" constant="21" id="iKo-7h-dyK"/>
@@ -141,6 +146,7 @@
                                     <constraint firstItem="t3n-Jz-KgU" firstAttribute="top" secondItem="mQc-ch-NA1" secondAttribute="bottom" constant="34" id="kYh-qW-5KR"/>
                                     <constraint firstAttribute="centerX" secondItem="SCB-4o-lOn" secondAttribute="centerX" id="kjG-vN-UmV"/>
                                     <constraint firstAttribute="centerX" secondItem="saH-XA-HlU" secondAttribute="centerX" id="lX6-uw-beI"/>
+                                    <constraint firstItem="KjQ-LT-og5" firstAttribute="top" secondItem="TSj-An-0gh" secondAttribute="bottom" constant="8" symbolic="YES" id="mEV-Mv-jnA"/>
                                     <constraint firstItem="Dzm-HC-Mf8" firstAttribute="top" secondItem="TSj-An-0gh" secondAttribute="bottom" constant="45" id="mNP-Ar-hxb"/>
                                     <constraint firstItem="WsZ-WK-tzk" firstAttribute="top" secondItem="SCU-ML-HxP" secondAttribute="bottom" constant="8" symbolic="YES" id="oWF-Y1-AHm"/>
                                     <constraint firstItem="TSj-An-0gh" firstAttribute="leading" secondItem="Akg-pL-Zcw" secondAttribute="leading" id="q7C-pY-Huv"/>
@@ -164,6 +170,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>
+                        <outlet property="indNetworkLoading" destination="KjQ-LT-og5" id="SdS-qF-ef1"/>
                         <outlet property="txtCanadianDollar" destination="5hf-Er-qX1" id="toP-xY-Csh"/>
                         <outlet property="txtEuro" destination="TSj-An-0gh" id="QGX-du-3c6"/>
                         <outlet property="txtJapaneseYen" destination="WsZ-WK-tzk" id="AmM-SY-43V"/>
